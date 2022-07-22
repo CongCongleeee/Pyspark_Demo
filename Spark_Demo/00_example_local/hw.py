@@ -3,8 +3,8 @@
 from pyspark import SparkConf, SparkContext
 from pyspark.sql.functions import *
 import os
-# os.environ['JAVA_HOME'] = 'C:\\Program Files\\Java\\jdk1.8.0_202'  # 这里的路径为java的bin目录所在路径
-os.environ['PYSPARK_DRIVER_PYTHON'] = 'C:\\Users\YP715HX\Documents\Documents\Python Item\venv\Scripts\python.exe'
+os.environ['JAVA_HOME'] = 'C:\\Program Files\Java\jdk-10.0.1'
+# os.environ['PYSPARK_DRIVER_PYTHON'] = 'C:\\Users\YP715HX\Documents\Documents\Python Item\venv\Scripts\python.exe'
 
 if __name__ == '__main__':
     conf = SparkConf().setAppName('00_00')
@@ -16,8 +16,10 @@ if __name__ == '__main__':
     file_rdd = sc.textFile("./words.txt")
     # file_rdd = sc.textFile("hdfs://node1:8020/Input/words.txt")
 
+
     # 将单词进行切割, 得到一个存储全部单词的集合对象
     words_rdd = file_rdd.flatMap(lambda line: line.split(" "))
+    print(words_rdd.collect())
 
     # 将单词转换为元组对象, key是单词, value是数字1
     words_with_one_rdd = words_rdd.map(lambda x: (x, 1))
